@@ -3,9 +3,15 @@ const express = require('express');
 const routes = require('./routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('../swagger');
+const database = require('./services/database');
 
 // Initialize express app
 const app = express();
+
+// Initialize database tables
+database.initializeTables().catch(error => {
+  console.error('Failed to initialize database tables:', error);
+});
 
 app.use(cors({
   origin: '*',
